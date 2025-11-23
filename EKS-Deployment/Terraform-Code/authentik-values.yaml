@@ -1,0 +1,25 @@
+# authentik-values.yaml
+# --- REQUIRED: Set SECURE VALUES ---
+authentik:
+  # CHANGE THIS! Generate a long, random key.
+  secret_key: "CHANGE_ME_TO_A_SECURE_RANDOM_STRING_OVER_50_CHARACTERS" 
+  # Set the initial admin password for the akadmin user. CHANGE THIS!
+  initial_admin_password: "MySuperSecurePassword123"
+
+# --- INGRESS CONFIGURATION ---
+server:
+  ingress:
+    enabled: true
+    # IMPORTANT: Must match the ingress controller's IngressClass name ('nginx' in this setup)
+    ingressClassName: "nginx" 
+    hosts:
+      # Replace this with your actual public domain name
+      - host: authentik.yourdomain.com
+        paths:
+          - path: /
+            pathType: Prefix
+    # Optionally enable TLS if you plan to use cert-manager later
+    # tls:
+    #   - secretName: authentik-tls-secret
+    #     hosts:
+    #       - authentik.yourdomain.com
